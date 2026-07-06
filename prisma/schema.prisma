@@ -33,6 +33,8 @@ model LegalDocument {
   publicationDate DateTime?
   effectiveDate   DateTime?
   sourceUrl       String?
+  sourceType      String?
+  isOfficial      Boolean          @default(false)
   rawText         String
   checksum        String           @unique
   createdAt       DateTime         @default(now())
@@ -54,6 +56,7 @@ model LegalChunk {
   pageEnd       Int?
   sectionLabel  String?
   embedding     Unsupported("vector")?
+  metadata      Json?
   createdAt     DateTime       @default(now())
   answerSources AnswerSource[]
 

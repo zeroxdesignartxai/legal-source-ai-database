@@ -1,6 +1,7 @@
 import crypto from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
+import { chunkLegalText, parseDocumentBuffer } from "@/lib/document-processing";
 import { safeErrorMessage, sanitizeText } from "@/lib/security";
 import { uploadMetadataSchema } from "@/lib/validation";
 
@@ -53,6 +54,7 @@ export async function POST(req: NextRequest) {
     }
 
     const buffer = Buffer.from(await file.arrayBuffer());
+    const parsedDocument = parseDocumentBuffer(file.name, file.type, buffer);
     const checksum = crypto.createHash("sha256").update(buffer).digest("hex");
 
     const existingDoc = await prisma.legalDocument.findUnique({
@@ -63,24 +65,32 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Document already exists", documentId: existingDoc.id }, { status: 409 });
     }
 
-    const rawText =
-      file.type === "text/plain" || /\.txt$/i.test(file.name)
-        ? sanitizeText(buffer.toString("utf-8"))
-        : `Uploaded binary document: ${sanitizeText(file.name)}. Full OCR/parsing worker pending provider configuration.`;
+    const rawText = parsedDocument.rawText;
+    const chunks = chunkLegalText(rawText);
 
     const doc = await prisma.legalDocument.create({
       data: {
-        title: sanitizeText(file.name).slice(0, 240),
+        title: parsedDocument.title,
         checksum,
         rawText,
         jurisdiction: parsedMetadata.data.jurisdiction,
         documentType: "user_upload",
         chunks: {
-          create: {
-            chunkIndex: 0,
-            sectionLabel: "Uploaded text",
-            text: rawText
-          }
+          create: chunks.length
+            ? chunks.map((chunk) => ({
+                chunkIndex: chunk.chunkIndex,
+                sectionLabel: chunk.sectionLabel,
+                pageStart: chunk.pageStart,
+                pageEnd: chunk.pageEnd,
+                text: chunk.text
+              }))
+            : [
+                {
+                  chunkIndex: 0,
+                  sectionLabel: "Uploaded text",
+                  text: rawText
+                }
+              ]
         }
       }
     });
@@ -91,7 +101,9 @@ export async function POST(req: NextRequest) {
         title: doc.title,
         checksum: doc.checksum,
         status: "PROCESSING",
-        createdAt: doc.createdAt
+        createdAt: doc.createdAt,
+        parser: parsedDocument.parser,
+        chunksCreated: chunks.length || 1
       },
       { status: 201 }
     );

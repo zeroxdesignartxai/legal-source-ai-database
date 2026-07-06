@@ -23,6 +23,7 @@
         <a href="#ask">Ask</a>
         <a href="#fusion">Fusion</a>
         <a href="#toolkit">Toolkit</a>
+        <a href="#rag-system">RAG</a>
         <a href="#packet">Packet</a>
       </nav>
     </header>
@@ -113,6 +114,37 @@
           <input id="assistantSearch" type="search" placeholder="Search debt, credit, housing, Section 8..." />
         </div>
         <div class="assistant-grid" id="assistantGrid"></div>
+      </section>
+
+      <section id="rag-system" class="rag-system">
+        <div>
+          <p class="section-label">Legal Source RAG Builder</p>
+          <h2>Verified-source answer pipeline</h2>
+          <p>
+            The app now includes API routes and source connector modules for parsing, chunking, embedding,
+            hybrid search, citation verification, and attorney packet generation.
+          </p>
+        </div>
+        <div class="rag-columns">
+          <article>
+            <h3>Trusted connectors</h3>
+            <ul id="sourceConnectors"></ul>
+          </article>
+          <article>
+            <h3>RAG workflow</h3>
+            <ol>
+              <li>Classify jurisdiction and topic</li>
+              <li>Search trusted sources and uploads</li>
+              <li>Rank chunks by relevance and authority</li>
+              <li>Answer only from retrieved material</li>
+              <li>Verify citations and unsupported claims</li>
+            </ol>
+          </article>
+          <article>
+            <h3>API surface</h3>
+            <ul id="apiRoutes"></ul>
+          </article>
+        </div>
       </section>
 
       <section id="upload" class="panel">

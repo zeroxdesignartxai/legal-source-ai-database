@@ -19,3 +19,12 @@ test("static toolkit includes Legal Eagle and consumer assistant functions", () 
   assert.match(script, /Section 8 \/ Subsidized Housing Complaint Writer/);
   assert.match(script, /Housing Discrimination Complaint Writer/);
 });
+
+test("static deployment exposes source RAG builder surface", () => {
+  const html = readFileSync("deploy-static/index.html", "utf8");
+  const script = readFileSync("deploy-static/app.js", "utf8");
+  assert.match(html, /id="rag-system"/);
+  assert.match(script, /CourtListener \/ Free Law Project/);
+  assert.match(script, /POST \/api\/documents\/chunk/);
+  assert.match(script, /POST \/api\/verify/);
+});

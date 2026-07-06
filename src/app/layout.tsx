@@ -13,6 +13,7 @@ const navItems = [
   { href: "/upload", label: "Upload" },
   { href: "/search", label: "Search" },
   { href: "/ask", label: "Ask" },
+  { href: "/fusion", label: "Fusion" },
   { href: "/packet-builder", label: "Packet" },
   { href: "/settings/sources", label: "Sources" }
 ];

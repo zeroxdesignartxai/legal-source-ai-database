@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
     const { answer, retrievedChunks } = await executeRAGPipeline(question, jurisdiction);
     const verificationReport = await verifyAnswer(answer, retrievedChunks);
 
-    let answerId = crypto.randomUUID();
+    let answerId: string = crypto.randomUUID();
 
     try {
       const savedAnswer = await prisma.legalAnswer.create({

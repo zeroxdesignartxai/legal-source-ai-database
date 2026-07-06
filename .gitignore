@@ -7,3 +7,6 @@ dist/
 *.log
 prisma/*.db
 legal-source-ai-deploy.zip
+.tmp-imports/
+.tmp-pack/
+tsconfig.tsbuildinfo

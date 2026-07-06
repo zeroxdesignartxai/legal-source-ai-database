@@ -156,6 +156,135 @@ p {
   padding: 28px;
 }
 
+.section-label {
+  color: var(--clay);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  margin: 0 0 8px;
+  text-transform: uppercase;
+}
+
+.fusion {
+  background: var(--ink);
+  border-radius: 6px;
+  color: var(--paper);
+  margin: 28px 0;
+  padding: 28px;
+}
+
+.fusion p {
+  color: rgba(255, 253, 247, 0.72);
+}
+
+.fusion-hero {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: minmax(0, 1fr) 340px;
+}
+
+.confidence-card,
+.fusion-card,
+.node-card,
+.action-card {
+  border: 1px solid rgba(255, 253, 247, 0.16);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 18px;
+}
+
+.confidence-card span {
+  color: rgba(255, 253, 247, 0.6);
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.confidence-card strong {
+  color: var(--gold);
+  display: block;
+  font-size: 48px;
+  margin-top: 12px;
+}
+
+.fusion-modules {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 24px;
+}
+
+.fusion-card h3,
+.node-card h4,
+.action-card h4 {
+  margin: 0 0 8px;
+}
+
+.fusion-card small,
+.node-card small,
+.action-card small {
+  color: var(--gold);
+  display: block;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.fusion-card ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+}
+
+.fusion-card li {
+  background: rgba(255, 253, 247, 0.1);
+  border-radius: 4px;
+  color: rgba(255, 253, 247, 0.72);
+  font-size: 12px;
+  padding: 6px 8px;
+}
+
+.fusion-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: 0.9fr 1.1fr;
+  margin-top: 24px;
+}
+
+.node-map,
+.action-list {
+  display: grid;
+  gap: 10px;
+}
+
+.node-card[data-strength="verified"] {
+  border-color: rgba(31, 95, 74, 0.7);
+}
+
+.node-card[data-strength="urgent"] {
+  border-color: rgba(154, 79, 55, 0.8);
+}
+
+.node-card[data-strength="needs-proof"] {
+  border-color: rgba(183, 131, 47, 0.75);
+}
+
+.action-card {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr 140px;
+}
+
+.action-card p {
+  margin: 0;
+}
+
 .metrics {
   display: grid;
   gap: 16px;
@@ -252,6 +381,13 @@ footer {
   }
 
   .metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .fusion-hero,
+  .fusion-modules,
+  .fusion-grid,
+  .action-card {
     grid-template-columns: 1fr;
   }
 }

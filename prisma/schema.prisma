@@ -1,0 +1,133 @@
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [pgvector]
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+model LegalSource {
+  id         String          @id @default(uuid()) @db.Uuid
+  name       String
+  sourceType String
+  baseUrl    String?
+  isOfficial Boolean         @default(false)
+  createdAt  DateTime        @default(now())
+  documents  LegalDocument[]
+
+  @@map("legal_sources")
+}
+
+model LegalDocument {
+  id              String           @id @default(uuid()) @db.Uuid
+  sourceId        String?          @db.Uuid
+  source          LegalSource?     @relation(fields: [sourceId], references: [id])
+  title           String
+  citation        String?
+  jurisdiction    String?
+  courtOrAgency   String?
+  documentType    String?
+  publicationDate DateTime?
+  effectiveDate   DateTime?
+  sourceUrl       String?
+  rawText         String
+  checksum        String           @unique
+  createdAt       DateTime         @default(now())
+  chunks          LegalChunk[]
+  citations       LegalCitation[]  @relation("DocumentCitations")
+  citedIn         LegalCitation[]  @relation("TargetDocument")
+  packetDocuments PacketDocument[]
+
+  @@map("legal_documents")
+}
+
+model LegalChunk {
+  id            String         @id @default(uuid()) @db.Uuid
+  documentId    String         @db.Uuid
+  document      LegalDocument  @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  chunkIndex    Int
+  text          String
+  pageStart     Int?
+  pageEnd       Int?
+  sectionLabel  String?
+  embedding     Unsupported("vector")?
+  createdAt     DateTime       @default(now())
+  answerSources AnswerSource[]
+
+  @@map("legal_chunks")
+}
+
+model LegalCitation {
+  id                 String         @id @default(uuid()) @db.Uuid
+  documentId         String         @db.Uuid
+  document           LegalDocument  @relation("DocumentCitations", fields: [documentId], references: [id], onDelete: Cascade)
+  citedText          String
+  normalizedCitation String?
+  citationType       String?
+  targetDocumentId   String?        @db.Uuid
+  targetDocument     LegalDocument? @relation("TargetDocument", fields: [targetDocumentId], references: [id])
+  createdAt          DateTime       @default(now())
+
+  @@map("legal_citations")
+}
+
+model LegalAnswer {
+  id              String            @id @default(uuid()) @db.Uuid
+  userQuestion    String
+  answer          String
+  jurisdiction    String?
+  topic           String?
+  confidenceLevel String?
+  createdAt       DateTime          @default(now())
+  sources         AnswerSource[]
+  verifications   VerificationRun[]
+
+  @@map("legal_answers")
+}
+
+model AnswerSource {
+  id             String      @id @default(uuid()) @db.Uuid
+  answerId       String      @db.Uuid
+  answer         LegalAnswer @relation(fields: [answerId], references: [id], onDelete: Cascade)
+  chunkId        String      @db.Uuid
+  chunk          LegalChunk  @relation(fields: [chunkId], references: [id], onDelete: Cascade)
+  relevanceScore Float
+  usedInAnswer   Boolean     @default(true)
+
+  @@map("answer_sources")
+}
+
+model VerificationRun {
+  id        String      @id @default(uuid()) @db.Uuid
+  answerId  String      @db.Uuid
+  answer    LegalAnswer @relation(fields: [answerId], references: [id], onDelete: Cascade)
+  status    String
+  issues    Json
+  createdAt DateTime    @default(now())
+
+  @@map("verification_runs")
+}
+
+model AttorneyPacket {
+  id          String           @id @default(uuid()) @db.Uuid
+  title       String
+  description String?
+  createdAt   DateTime         @default(now())
+  documents   PacketDocument[]
+
+  @@map("attorney_packets")
+}
+
+model PacketDocument {
+  id         String         @id @default(uuid()) @db.Uuid
+  packetId   String         @db.Uuid
+  packet     AttorneyPacket @relation(fields: [packetId], references: [id], onDelete: Cascade)
+  documentId String         @db.Uuid
+  document   LegalDocument  @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  addedAt    DateTime       @default(now())
+
+  @@map("packet_documents")
+}

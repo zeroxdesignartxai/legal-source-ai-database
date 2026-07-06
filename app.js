@@ -24,6 +24,43 @@ const sources = [
 
 const packetDocs = new Set(["doc-ca-retaliation", "doc-hcv-termination"]);
 
+const fusionModules = [
+  {
+    repo: "smart-contract",
+    title: "Contract Clarity Engine",
+    role: "Reads agreements, notices, leases, voucher paperwork, and settlement drafts for risk, ambiguity, key dates, and negotiation pressure points.",
+    signals: ["Clause risk", "Timeline extraction", "Negotiation points", "Clarity check"]
+  },
+  {
+    repo: "legal",
+    title: "Legal Knowledge Graph",
+    role: "Turns facts, laws, agencies, remedies, and evidence into a linked proof map with reliability scoring.",
+    signals: ["Fact table", "Evidence match", "Opposition rebuttal", "Source reliability"]
+  },
+  {
+    repo: "legal-action",
+    title: "Action Planner",
+    role: "Converts the verified map into next steps, demand letters, public-record requests, and official resource routing.",
+    signals: ["Action wizard", "Resources", "Defense checklist", "Draft generator"]
+  }
+];
+
+const fusionNodes = [
+  { label: "Termination notice received", type: "Fact", strength: "verified" },
+  { label: "Brother visited for 3 days", type: "Evidence", strength: "needs-proof" },
+  { label: "24 CFR 982.551 / 982.554", type: "Authority", strength: "verified" },
+  { label: "Informal hearing window", type: "Deadline", strength: "urgent" },
+  { label: "CPRA / records demand", type: "Action", strength: "urgent" },
+  { label: "Voucher reinstatement", type: "Remedy", strength: "needs-proof" }
+];
+
+const fusionActions = [
+  ["Extract every date and deadline from the notice", "Immediate", "smart-contract timeline logic"],
+  ["Map each fact to a governing rule and proof item", "Before hearing packet", "legal knowledge graph"],
+  ["Draft a targeted records demand", "Same day", "legal-action document planner"],
+  ["Build attorney review packet", "Before legal aid intake", "current packet builder"]
+];
+
 function renderSearch() {
   const query = document.getElementById("searchInput").value.toLowerCase();
   const results = document.getElementById("searchResults");
@@ -57,6 +94,40 @@ function renderPacket() {
   const list = document.getElementById("packetDocs");
   list.innerHTML = Array.from(packetDocs)
     .map((id) => `<li><code>${id}</code></li>`)
+    .join("");
+}
+
+function renderFusion() {
+  document.getElementById("fusionModules").innerHTML = fusionModules
+    .map(
+      (module) => `<article class="fusion-card">
+        <small>${module.repo}</small>
+        <h3>${module.title}</h3>
+        <p>${module.role}</p>
+        <ul>${module.signals.map((signal) => `<li>${signal}</li>`).join("")}</ul>
+      </article>`
+    )
+    .join("");
+
+  document.getElementById("fusionNodes").innerHTML = fusionNodes
+    .map(
+      (node) => `<article class="node-card" data-strength="${node.strength}">
+        <small>${node.type}</small>
+        <h4>${node.label}</h4>
+      </article>`
+    )
+    .join("");
+
+  document.getElementById("fusionActions").innerHTML = fusionActions
+    .map(
+      ([action, deadline, source]) => `<article class="action-card">
+        <div>
+          <small>${source}</small>
+          <h4>${action}</h4>
+        </div>
+        <p><strong>${deadline}</strong></p>
+      </article>`
+    )
     .join("");
 }
 
@@ -110,3 +181,4 @@ document.getElementById("exportButton").addEventListener("click", () => {
 
 renderSearch();
 renderPacket();
+renderFusion();

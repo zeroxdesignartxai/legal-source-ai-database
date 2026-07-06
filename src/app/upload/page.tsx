@@ -48,7 +48,7 @@ export default function UploadPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">
       <h1 className="text-3xl font-semibold">Upload legal documents</h1>
-      <p className="mt-2 text-ink/68">Files are checked for size, type, duplicates, and checksum before persistence.</p>
+      <p className="mt-2 text-ink/68">Files are checked for size, type, duplicates, and checksum before persistence. Maximum size: 900 MB.</p>
       <Card className="mt-6">
         <CardHeader>
           <CardTitle>Document intake</CardTitle>
@@ -57,11 +57,11 @@ export default function UploadPage() {
           <label className="flex min-h-48 cursor-pointer flex-col items-center justify-center rounded border border-dashed border-line bg-field px-6 text-center">
             <FileUp className="text-pine" size={34} aria-hidden />
             <span className="mt-3 font-semibold">{file ? file.name : "Choose a document"}</span>
-            <span className="mt-1 text-sm text-ink/62">PDF, TXT, or DOCX up to 10MB</span>
+            <span className="mt-1 text-sm text-ink/62">PDF, TXT, DOCX, image, video, or evidence bundle up to 900 MB</span>
             <input
               className="sr-only"
               type="file"
-              accept=".pdf,.txt,.docx,text/plain,application/pdf"
+              accept=".pdf,.txt,.docx,.png,.jpg,.jpeg,.webp,.mp4,.mov,.zip,text/plain,application/pdf,image/*,video/*,application/zip"
               onChange={(event) => setFile(event.target.files?.[0] ?? null)}
             />
           </label>

@@ -4,18 +4,24 @@ import prisma from "@/lib/db";
 import { safeErrorMessage, sanitizeText } from "@/lib/security";
 import { uploadMetadataSchema } from "@/lib/validation";
 
-const MAX_FILE_SIZE = 10 * 1024 * 1024;
+const MAX_FILE_SIZE = 900 * 1024 * 1024;
 const ALLOWED_TYPES = new Set([
   "application/pdf",
   "text/plain",
-  "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "application/zip",
+  "video/mp4",
+  "video/quicktime",
+  "image/png",
+  "image/jpeg",
+  "image/webp"
 ]);
 
 function isAllowedFile(file: File): boolean {
   if (ALLOWED_TYPES.has(file.type)) {
     return true;
   }
-  return /\.(pdf|txt|docx)$/i.test(file.name);
+  return /\.(pdf|txt|docx|png|jpe?g|webp|mp4|mov|zip)$/i.test(file.name);
 }
 
 export async function POST(req: NextRequest) {
@@ -39,7 +45,7 @@ export async function POST(req: NextRequest) {
     }
 
     if (file.size > MAX_FILE_SIZE) {
-      return NextResponse.json({ error: "File exceeds 10MB limit" }, { status: 413 });
+      return NextResponse.json({ error: "File exceeds 900MB limit" }, { status: 413 });
     }
 
     if (!isAllowedFile(file)) {

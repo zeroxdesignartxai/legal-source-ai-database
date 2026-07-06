@@ -14,6 +14,7 @@ const navItems = [
   { href: "/search", label: "Search" },
   { href: "/ask", label: "Ask" },
   { href: "/fusion", label: "Fusion" },
+  { href: "/toolkit", label: "Toolkit" },
   { href: "/packet-builder", label: "Packet" },
   { href: "/settings/sources", label: "Sources" }
 ];

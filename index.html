@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Source-first California tenant and Section 8 legal information workspace." />
+    <title>Legal Source AI Database</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="Legal Source AI Database home">
+        <span class="mark">LS</span>
+        <span>
+          <strong>Legal Source AI Database</strong>
+          <small>California Tenant & Section 8 Edition</small>
+        </span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="#dashboard">Dashboard</a>
+        <a href="#upload">Upload</a>
+        <a href="#search">Search</a>
+        <a href="#ask">Ask</a>
+        <a href="#packet">Packet</a>
+      </nav>
+    </header>
+    <div class="disclaimer">This system provides legal information and document organization, not legal advice.</div>
+
+    <main id="home">
+      <section class="hero">
+        <div>
+          <h1>Fight Eviction with Verified Facts, Not Guesswork.</h1>
+          <p>Upload notices, inspect source-backed issues, ask California tenant and Section 8 questions, and build an attorney packet with citations that can be checked.</p>
+          <div class="actions">
+            <a class="button primary" href="#upload">Upload your notice</a>
+            <a class="button" href="#ask">Ask a source-backed question</a>
+          </div>
+        </div>
+        <aside class="workflow" aria-label="Verification workflow">
+          <h2>Verification workflow</h2>
+          <ol>
+            <li>Restrict answers to ingested sources</li>
+            <li>Generate citations inline</li>
+            <li>Run citation verifier before display</li>
+            <li>Export a packet for legal aid review</li>
+          </ol>
+        </aside>
+      </section>
+
+      <section id="dashboard" class="band">
+        <h2>Case dashboard</h2>
+        <div class="metrics">
+          <article><span>Active documents</span><strong>3</strong></article>
+          <article><span>Verified answers</span><strong>2</strong></article>
+          <article><span>Packet readiness</span><strong>67%</strong></article>
+        </div>
+      </section>
+
+      <section id="upload" class="panel">
+        <h2>Upload legal documents</h2>
+        <p>Demo mode calculates client-side status for selected files. The full Next.js source includes the secure upload API.</p>
+        <label class="dropzone">
+          <input id="fileInput" type="file" accept=".pdf,.txt,.docx,text/plain,application/pdf" />
+          <span id="fileLabel">Choose a PDF, TXT, or DOCX file up to 10MB</span>
+        </label>
+        <button id="uploadButton" class="button primary" type="button">Upload and parse</button>
+        <div id="uploadResult" class="result" role="status"></div>
+      </section>
+
+      <section id="search" class="panel">
+        <h2>Source search</h2>
+        <input id="searchInput" type="search" value="retaliation mold" aria-label="Search sources" />
+        <div id="searchResults" class="results"></div>
+      </section>
+
+      <section id="ask" class="panel">
+        <h2>Ask verified sources</h2>
+        <textarea id="questionInput">Can my landlord evict me for complaining about mold?</textarea>
+        <button id="askButton" class="button primary" type="button">Ask</button>
+        <article id="answerResult" class="answer"></article>
+      </section>
+
+      <section id="packet" class="panel">
+        <h2>Attorney packet builder</h2>
+        <input id="packetTitle" value="Eviction Defense Intake Packet" aria-label="Packet title" />
+        <ul id="packetDocs"></ul>
+        <button id="exportButton" class="button primary" type="button">Export packet</button>
+      </section>
+    </main>
+
+    <footer>Source-first legal research workspace. Verify with an attorney before filing.</footer>
+    <script src="./app.js"></script>
+  </body>
+</html>

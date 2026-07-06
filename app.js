@@ -101,6 +101,28 @@ const consumerAssistants = [
   [25, "Housing Discrimination Complaint Writer", "Housing & Tenant Rights", "Draft housing discrimination complaints.", ["Fair Housing Act explanation", "Complaint draft", "HUD submission info"]]
 ];
 
+const sourceConnectors = [
+  "CourtListener / Free Law Project",
+  "GovInfo",
+  "eCFR",
+  "Federal Register",
+  "California Legislative Information",
+  "User uploads"
+];
+
+const apiRoutes = [
+  "POST /api/documents/upload",
+  "POST /api/documents/parse",
+  "POST /api/documents/chunk",
+  "POST /api/documents/embed",
+  "GET /api/search",
+  "POST /api/ask",
+  "POST /api/verify",
+  "POST /api/packet",
+  "GET /api/sources",
+  "POST /api/sources/sync"
+];
+
 function renderSearch() {
   const query = document.getElementById("searchInput").value.toLowerCase();
   const results = document.getElementById("searchResults");
@@ -185,6 +207,11 @@ function renderToolkit() {
   renderAssistants();
 }
 
+function renderRagSystem() {
+  document.getElementById("sourceConnectors").innerHTML = sourceConnectors.map((item) => `<li>${item}</li>`).join("");
+  document.getElementById("apiRoutes").innerHTML = apiRoutes.map((item) => `<li><code>${item}</code></li>`).join("");
+}
+
 function renderAssistants() {
   const q = (document.getElementById("assistantSearch")?.value || "").toLowerCase();
   const rows = consumerAssistants.filter((assistant) => assistant.slice(1).join(" ").toLowerCase().includes(q));
@@ -253,3 +280,4 @@ renderSearch();
 renderPacket();
 renderFusion();
 renderToolkit();
+renderRagSystem();

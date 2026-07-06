@@ -22,6 +22,7 @@
         <a href="#search">Search</a>
         <a href="#ask">Ask</a>
         <a href="#fusion">Fusion</a>
+        <a href="#toolkit">Toolkit</a>
         <a href="#packet">Packet</a>
       </nav>
     </header>
@@ -89,12 +90,37 @@
         </div>
       </section>
 
+      <section id="toolkit" class="toolkit">
+        <div class="toolkit-header">
+          <div>
+            <p class="section-label">2 repo expansion</p>
+            <h2>Legal Eagle + Consumer Assistant Suite</h2>
+            <p>
+              Added the full Legal Eagle tool deck and consumer-law assistant library:
+              document tools, evidence image analysis, live/omni chat concepts, and guided complaint/demand workflows.
+            </p>
+          </div>
+          <aside class="upload-ceiling">
+            <span>Large evidence intake</span>
+            <strong>900 MB</strong>
+            <p>Upload PDFs, text, DOCX, images, video, ZIP evidence bundles, screenshots, and large case files.</p>
+          </aside>
+        </div>
+        <h3>Legal Eagle tool functions</h3>
+        <div class="tool-grid" id="toolkitTools"></div>
+        <div class="assistant-toolbar">
+          <h3>25 consumer assistants</h3>
+          <input id="assistantSearch" type="search" placeholder="Search debt, credit, housing, Section 8..." />
+        </div>
+        <div class="assistant-grid" id="assistantGrid"></div>
+      </section>
+
       <section id="upload" class="panel">
         <h2>Upload legal documents</h2>
-        <p>Demo mode calculates client-side status for selected files. The full Next.js source includes the secure upload API.</p>
+        <p>Demo mode calculates client-side status for selected files. The full Next.js source includes the secure upload API. Maximum size: 900 MB.</p>
         <label class="dropzone">
-          <input id="fileInput" type="file" accept=".pdf,.txt,.docx,text/plain,application/pdf" />
-          <span id="fileLabel">Choose a PDF, TXT, or DOCX file up to 10MB</span>
+          <input id="fileInput" type="file" accept=".pdf,.txt,.docx,.png,.jpg,.jpeg,.webp,.mp4,.mov,.zip,text/plain,application/pdf,image/*,video/*,application/zip" />
+          <span id="fileLabel">Choose a PDF, TXT, DOCX, image, video, or ZIP evidence bundle up to 900 MB</span>
         </label>
         <button id="uploadButton" class="button primary" type="button">Upload and parse</button>
         <div id="uploadResult" class="result" role="status"></div>

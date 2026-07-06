@@ -285,6 +285,117 @@ p {
   margin: 0;
 }
 
+.toolkit {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  box-shadow: 0 18px 48px rgba(22, 32, 29, 0.1);
+  margin: 28px 0;
+  padding: 28px;
+}
+
+.toolkit-header {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: minmax(0, 1fr) 330px;
+}
+
+.upload-ceiling {
+  background: var(--ink);
+  border-radius: 6px;
+  color: var(--paper);
+  padding: 22px;
+}
+
+.upload-ceiling span {
+  color: rgba(255, 253, 247, 0.62);
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.upload-ceiling strong {
+  color: var(--gold);
+  display: block;
+  font-size: 46px;
+  margin-top: 10px;
+}
+
+.tool-grid,
+.assistant-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 16px;
+}
+
+.tool-card,
+.assistant-card {
+  background: var(--field);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 16px;
+}
+
+.tool-card small,
+.assistant-card small {
+  color: var(--pine);
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.tool-card h4,
+.assistant-card h4 {
+  margin: 0 0 8px;
+}
+
+.tool-card span {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  display: inline-flex;
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 10px;
+  padding: 6px 8px;
+}
+
+.assistant-toolbar {
+  align-items: center;
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  margin-top: 28px;
+}
+
+.assistant-toolbar input {
+  max-width: 420px;
+}
+
+.assistant-card ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+}
+
+.assistant-card li {
+  background: var(--paper);
+  border-radius: 4px;
+  color: rgba(22, 32, 29, 0.68);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 7px;
+}
+
 .metrics {
   display: grid;
   gap: 16px;
@@ -387,7 +498,15 @@ footer {
   .fusion-hero,
   .fusion-modules,
   .fusion-grid,
-  .action-card {
+  .action-card,
+  .toolkit-header,
+  .tool-grid,
+  .assistant-grid {
     grid-template-columns: 1fr;
+  }
+
+  .assistant-toolbar {
+    align-items: stretch;
+    flex-direction: column;
   }
 }
